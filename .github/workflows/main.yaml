@@ -8,10 +8,13 @@ on:
 jobs:
   run-jest-server:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 16
-      - run: cd server && npm ci
+      - run: npm ci
       - run: npm test
