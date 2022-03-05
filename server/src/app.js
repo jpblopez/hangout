@@ -6,4 +6,6 @@ app.use(cors());
 
 app.get('/', (req, res) => res.sendStatus(200));
 
+console.log('test');
+
 module.exports = app;
