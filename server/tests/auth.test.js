@@ -6,7 +6,6 @@ require('dotenv').config();
 
 describe('Login', () => {
   const login = () => request(app).post('/v1/auth/login');
-  const secret = process.env.SECRET;
 
   test('should exist', () => {
     return login()
@@ -84,7 +83,7 @@ describe('Refresh token', () => {
     expect(Number(res.status)).not.toBe(404);
   });
 
-  test('should return 422 on request without X-Refresh-Token header', async () => {
+  test('should return 400 on request without X-Refresh-Token header', async () => {
     const res = await token();
     expect(Number(res.status)).toBe(400);
   });
