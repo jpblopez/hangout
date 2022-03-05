@@ -1,9 +1,10 @@
-name: Testing multi-folder project
+name: Server test
 
 on:
-  push:
+  pull_request:
     branches:
-      - testing
+      - main
+  push:
 
 jobs:
   run-jest-server:
