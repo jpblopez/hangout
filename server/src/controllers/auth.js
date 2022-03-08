@@ -1,4 +1,4 @@
-const knex = require('./knex');
+const knex = require('../services/authKnexService');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
