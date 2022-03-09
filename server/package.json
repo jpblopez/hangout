@@ -18,7 +18,8 @@
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^1.0.3",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "jest": "^27.5.1",

@@ -6,12 +6,11 @@ exports.up = function (knex) {
   return knex.schema.createTable('listing', table => {
     table.increments('id');
     table.string('title');
-    table.string('description');
+    table.text('description');
+    table.float('rate');
+    table.integer('owner');
     table.string('location');
-    table.string('rate');
-    table.string('owner');
-    table.text('image');
-    table.string('Amenities');
+    table.string('image');
   });
 };
 

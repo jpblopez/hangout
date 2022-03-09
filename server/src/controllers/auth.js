@@ -1,4 +1,4 @@
-const knex = require('../services/authKnexService');
+const knex = require('../services/authService');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
@@ -14,12 +14,11 @@ x.login = async (req, res, next) => {
     return next(e.message);
   }
 
-  const error = createError(422, 'Invalid username and password combination');
+  const error = createError(401, 'Invalid username and password combination');
 
   if (!exist) return next(error);
 
   const valid = bcrypt.compareSync(password, exist.password);
-  console.log(error, valid);
   if (!valid) return next(error);
 
   const token = jwt.sign(
@@ -43,11 +42,11 @@ x.register = async (req, res, next) => {
   let exist;
   try {
     exist = await knex.getUsers(email);
+    res.status(200).send('Unique');
   } catch (e) {
     return next(e.message);
   }
-  console.log(exist);
-  if (exist) return next(createError(422, 'Username already exists!'));
+  if (exist) return next(createError(409, 'Username already exists!'));
 
   const hash = bcrypt.hashSync(password, 10);
   try {
