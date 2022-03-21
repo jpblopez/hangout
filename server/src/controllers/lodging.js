@@ -7,7 +7,9 @@ x.lodgings = async (req, res, next) => {
   let lodgings;
   try {
     lodgings = await knex.getLodgings();
-  } catch {}
+  } catch {
+    return next(createError(503, 'No response from server'));
+  }
   res.status(200).json({
     lodgings,
   });
@@ -18,8 +20,7 @@ x.lodging = async (req, res, next) => {
   try {
     lodgings = await knex.getLodging(req.params.id);
   } catch {
-    const error = createError(404, 'Not found');
-    return next(error);
+    return next(createError(404, 'Not found'));
   }
   res.status(200).json(lodgings);
 };

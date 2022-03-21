@@ -3,8 +3,7 @@ const knex = require('../db/knex');
 const x = {};
 
 x.getLodgings = async () => {
-  let result;
-  result = await knex.select().table('listing');
+  let result = await knex.select().table('listing');
   return result;
 };
 

@@ -75,7 +75,7 @@ describe('Registration', () => {
 });
 
 describe('Refresh token', () => {
-  const token = () => request(app).get('/v1/auth/refresh-token');
+  const token = () => request(app).get('/v1/auth/token/refresh');
 
   test('should exist', async () => {
     const res = await token();
@@ -85,7 +85,7 @@ describe('Refresh token', () => {
 
   test('should return 400 on request without X-Refresh-Token header', async () => {
     const res = await token();
-    expect(Number(res.status)).toBe(400);
+    expect(Number(res.status)).toBe(401);
   });
 
   test('should return 422 on invalid token', async () => {
@@ -93,6 +93,6 @@ describe('Refresh token', () => {
 
     const res = await token().set('X-Refresh-Token', refresh);
 
-    expect(Number(res.status)).toBe(422);
+    expect(Number(res.status)).toBe(401);
   });
 });

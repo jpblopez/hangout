@@ -19,7 +19,7 @@ exports.login = async (req, res, next) => {
       next();
     }
   } catch {
-    const error = createError(422, 'Invalid username and password combination');
+    const error = createError(422, 'Invalid email and password combination');
     next(error);
   }
 };
