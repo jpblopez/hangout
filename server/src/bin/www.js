@@ -4,4 +4,4 @@ const config = require('../config/index');
 
 const server = http.createServer(app);
 
-server.listen(config.port);
+server.listen(config.port, () => console.log('Listening on port', config.port));
