@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "start": "nodemon src/bin/www.js"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "jest": "^27.5.1",
+    "nodemon": "^2.0.15",
     "supertest": "^6.2.2"
   }
 }
