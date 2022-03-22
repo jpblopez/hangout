@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --detectOpenHandles",
-    "start": "nodemon src/bin/www.js",
+    "start": "nodemon --exec babel-node src/bin/www.js",
     "migrate": "npx knex migrate:latest",
     "seeds": "npx knex seed:run ",
-    "rollback": "npx knex migrate:rollback"
+    "rollback": "npx knex migrate:rollback",
+    "test:dev": "babel-node src/v1/components/Auth/index.js"
   },
   "keywords": [],
   "author": "",
@@ -28,8 +29,22 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "eslint": "^8.11.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-babel-module": "^5.3.1",
+    "eslint-import-resolver-node": "^0.3.6",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-security": "^1.4.0",
     "jest": "^27.5.1",
     "nodemon": "^2.0.15",
+    "prettier": "^2.6.0",
     "supertest": "^6.2.2"
   }
 }
