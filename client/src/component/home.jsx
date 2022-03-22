@@ -38,6 +38,19 @@ function Home() {
         <button className="ml-10 border border-black" onClick={LogoutSuccess}>
           LOGOUT
         </button>
+        <button
+          className="ml-10 border border-black"
+          onClick={() => navigate('/createLodging')}
+        >
+          Create Lodging
+        </button>
+
+        <button
+          className="ml-10 border border-black"
+          onClick={() => navigate('/mylodging')}
+        >
+          My lodgings
+        </button>
       </div>
       <div className="flex">
         {lodging.map(c => {

@@ -5,31 +5,24 @@ const jwt = require('jsonwebtoken');
 const config = require('../../config');
 const createError = require('http-errors');
 
-const x = {}
+const x = {};
 
 x.createLodging = async (req, res, next) => {
   try {
-
-    console.log(req.body);
-    console.log(req.file);
-
-    const token = jwt.verify(req.headers['Authorization'], config.secret);
+    const token = jwt.verify(req.headers['authorization'], config.secret);
 
     if (!token) return next(createError(403, 'Missing authorization token'));
 
-    const user = await userService.getUser(token.email);
+    const user = await userService.getUsers(token.email);
 
     if (token.id !== user.id) return next(createError(401, 'Unauthorized'));
 
-    if (req.params.username !== user.username) return next(createError(401, 'Unauthorized'));
-
     const { body } = req;
-    
 
     await service.createLodging({
       ...body,
       owner: token.id,
-      image: req.file.path
+      image: req.file.path,
     });
 
     return res.sendStatus(201);

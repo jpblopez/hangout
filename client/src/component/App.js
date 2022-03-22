@@ -8,6 +8,7 @@ import Layout from './Layout';
 import RequireAuth from './RequireAuth';
 import api from '../api/axios';
 import useAuth from '../hooks/useAuth';
+import CreateLodging from './createLodging';
 
 function App() {
   const { setAuth } = useAuth();
@@ -29,6 +30,7 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route element={<LodgingDetails />} path="lodging/:id" />
           <Route element={<Homepage />} path="homepage" />
+          <Route element={<CreateLodging />} path="createLodging" />
         </Route>
       </Route>
     </Routes>

@@ -55,7 +55,7 @@ x.login = async (req, res, next) => {
 };
 
 x.register = async (req, res, next) => {
-  const { email, name, password } = req.body;
+  const { username, email, name, password } = req.body;
   let exist;
   try {
     exist = await knex.getUsers(email);
@@ -67,7 +67,7 @@ x.register = async (req, res, next) => {
 
   const hash = bcrypt.hashSync(password, 10);
   try {
-    await knex.insertUsers(email, name, hash);
+    await knex.insertUsers(username, email, name, hash);
     res.status(200).send('success');
   } catch (e) {
     return next(e.message);
@@ -76,7 +76,6 @@ x.register = async (req, res, next) => {
 
 x.refresh = async (req, res, next) => {
   const { cookies } = req;
-  console.log('coke', cookies);
 
   if (!cookies['X-Refresh-Token']) {
     const error = createError(401, 'Not Authorized');

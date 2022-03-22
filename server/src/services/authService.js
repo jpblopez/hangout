@@ -7,10 +7,11 @@ x.getUsers = async email => {
   return result;
 };
 
-x.insertUsers = async (email, username, password) => {
+x.insertUsers = async (username, email, name, password) => {
   await knex('user').insert({
+    username: username,
     email: email,
-    name: username,
+    name: name,
     password: password,
   });
 };

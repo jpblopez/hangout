@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --detectOpenHandles",
-    "start": "nodemon src/bin/www.js"
+    "start": "nodemon src/bin/www.js",
+    "migrate": "npx knex migrate:latest",
+    "seeds": "npx knex seed:run ",
+    "rollback": "npx knex migrate:rollback"
   },
   "keywords": [],
   "author": "",

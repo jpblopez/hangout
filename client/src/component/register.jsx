@@ -9,11 +9,13 @@ function RegistrationForm() {
   let [error, setError] = useState(null);
   const formik = useFormik({
     initialValues: {
+      username: '',
       email: '',
       name: '',
       password: '',
     },
     validationSchema: Yup.object({
+      username: Yup.string('').required('Required'),
       email: Yup.string().email('Invalid Email').required('Required'),
       name: Yup.string().required('Required'),
       password: Yup.string().required('Required'),
@@ -55,6 +57,25 @@ function RegistrationForm() {
                 onSubmit={formik.handleSubmit}
               >
                 <div className="pb-5 px-6 w-96 h-auto">
+                  <label className="block pt-3">Username:</label>
+                  <input
+                    className="border w-full border-black h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-blue-600"
+                    type="text"
+                    name="username"
+                    id="username"
+                    onChange={e => {
+                      formik.handleChange(e);
+                      setError(() => {
+                        return '';
+                      });
+                    }}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.username}
+                  />
+                  {formik.touched.username && formik.errors.username ? (
+                    <p className="text-red-500">{formik.errors.username}</p>
+                  ) : null}
+
                   <label className="block pt-3">Email:</label>
                   <input
                     className="border w-full border-black h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-blue-600"
