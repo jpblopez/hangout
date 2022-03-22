@@ -9,7 +9,6 @@
     "migrate": "npx knex migrate:latest",
     "seeds": "npx knex seed:run ",
     "rollback": "npx knex migrate:rollback",
-    "test:dev": "babel-node src/v1/components/Auth/index.js"
   },
   "keywords": [],
   "author": "",
