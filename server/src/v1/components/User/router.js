@@ -1,8 +1,16 @@
-const router = require('express').Router();
-const createValidator = require('@/middleware/createLodgingValidation');
-const upload = require('@/helpers/multer');
-const controller = require('./controller');
+import { Router } from 'express';
+import validator from '@/middleware/schemaValidator';
+import upload from '@/helpers/multer';
+import controller from './controller';
+import { createLodging } from './validations';
 
-router.post('/lodgings', upload.single('image'), createValidator, controller.createLodging);
+const router = Router();
 
-module.exports = router;
+router.post(
+  '/lodgings',
+  upload.single('image'),
+  validator(createLodging),
+  controller.createLodging
+);
+
+export default router;
