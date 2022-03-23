@@ -1,6 +1,6 @@
-const knex = require('../services/lodgingService');
 const createError = require('http-errors');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST);
+const knex = require('./service');
 
 const x = {};
 
@@ -20,6 +20,7 @@ x.lodging = async (req, res, next) => {
   let lodgings;
   try {
     lodgings = await knex.getLodging(req.params.id);
+    if (!lodgings) throw new Error();
   } catch {
     return next(createError(404, 'Not found'));
   }

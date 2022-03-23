@@ -1,6 +1,4 @@
-const knex = require('../../db/knex');
-const createError = require('http-errors');
-const service = require('../../services/amenitiesService');
+import service from './service';
 
 const x = {};
 
@@ -16,7 +14,6 @@ x.get = async (req, res, next) => {
 };
 
 x.getSpecific = async (req, res, next) => {
-  console.log('imhere');
   try {
     const amenities = await service.getSpecific(req.params.id);
     return res.status(200).json({
@@ -27,4 +24,4 @@ x.getSpecific = async (req, res, next) => {
   }
 };
 
-module.exports = x;
+export default x;

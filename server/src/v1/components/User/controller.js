@@ -1,15 +1,15 @@
-const service = require('../../services/lodgingService');
-const userService = require('../../services/authService');
+const service = require('v1/components/Lodging/service');
+const userService = require('v1/components/Auth/service');
 
 const jwt = require('jsonwebtoken');
-const config = require('../../config');
+const config = require('@/config');
 const createError = require('http-errors');
 
 const x = {};
 
 x.createLodging = async (req, res, next) => {
   try {
-    const token = jwt.verify(req.headers['authorization'], config.secret);
+    const token = jwt.verify(req.headers.authorization, config.secret);
 
     if (!token) return next(createError(403, 'Missing authorization token'));
 

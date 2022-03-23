@@ -1,8 +1,9 @@
-const knex = require('../services/authService');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
-const configs = require('../config/index');
+
+const configs = require('@/config');
+const knex = require('./service');
 
 const x = {};
 
@@ -12,16 +13,14 @@ x.login = async (req, res, next) => {
 
   try {
     exist = await knex.getUsers(email);
-  } catch {
+  } catch (error) {
     return next(createError(503, 'No response from server'));
   }
 
-  if (!exist)
-    return next(createError(401, 'Invalid email and password combination'));
+  if (!exist) return next(createError(401, 'Invalid email and password combination'));
 
   const valid = bcrypt.compareSync(password, exist.password);
-  if (!valid)
-    return next(createError(401, 'Invalid email or password combination'));
+  if (!valid) return next(createError(401, 'Invalid email or password combination'));
 
   const token = jwt.sign(
     {
@@ -59,7 +58,7 @@ x.register = async (req, res, next) => {
   let exist;
   try {
     exist = await knex.getUsers(email);
-  } catch {
+  } catch (error) {
     return next(createError(503, 'No response from server'));
   }
 
@@ -82,8 +81,8 @@ x.refresh = async (req, res, next) => {
     return next(error);
   }
   try {
-    let exist = await knex.getToken(cookies['X-Refresh-Token']);
-    let token = jwt.sign(
+    const exist = await knex.getToken(cookies['X-Refresh-Token']);
+    const token = jwt.sign(
       {
         email: exist.email,
         id: exist.id,
@@ -97,7 +96,7 @@ x.refresh = async (req, res, next) => {
     res.status(200).json({
       token,
     });
-  } catch {
+  } catch (error) {
     return next(createError(503, 'No response from server'));
   }
 };
