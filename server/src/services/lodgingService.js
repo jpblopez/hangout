@@ -1,5 +1,5 @@
 const knex = require('../db/knex');
-const amenity = require('./amenitiesService')
+const amenity = require('./amenitiesService');
 
 const x = {};
 
@@ -20,15 +20,18 @@ x.getLodging = async id => {
 
 // todo create lodging_amenities table
 
-x.createLodging = async (body) => {
+x.createLodging = async body => {
   return knex.transaction(async trx => {
-    
-    const { amenities, ...details } = body
+    const { amenities, ...details } = body;
 
-    const id = await trx('listing').insert(details)
-    await amenity.insertLodgingAmenities(id, amenities)
+    const id = await trx('listing').insert(details);
+    await amenity.insertLodgingAmenities(id, amenities);
+  });
+};
 
-  })
-}
+x.getUserLodgings = async id => {
+  let result = await knex.select().table('listing').where('owner', id);
+  return result;
+};
 
 module.exports = x;

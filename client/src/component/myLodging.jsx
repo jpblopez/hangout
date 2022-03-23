@@ -1,56 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import image from '../summer.jpg';
 
-function Home() {
+function MyLodgings() {
   const [lodging, setLodgingList] = useState([]);
   const navigate = useNavigate();
-  const { setAuth } = useAuth();
-  const LogoutSuccess = async () => {
-    await api.get('/v1/auth/logout');
-    setAuth({});
-    navigate('/login');
-  };
-  const getLodging = async () => {
-    const res = await api.get('/v1/lodging');
+  const { auth } = useAuth();
+
+  const getMyLodging = async () => {
+    const res = await api.get('/v2/user/mylodgings', {
+      headers: {
+        Authorization: auth.accessToken,
+      },
+    });
     console.log(res);
     if (res.data.lodgings.length > 0) {
       let temp = res.data.lodgings.slice();
-      console.log('hehe', temp);
+
       setLodgingList(() => {
         return temp;
       });
     }
   };
 
-  console.log('lodging', lodging);
   useEffect(() => {
-    getLodging();
+    getMyLodging();
   }, []);
   return (
     <>
       <div className="block w-full pb-10 mt-5">
-        <span className=" font-bold text-2xl">
-          Browse through our list of hangouts
-        </span>
-        <button className="ml-10 border border-black" onClick={LogoutSuccess}>
-          LOGOUT
-        </button>
-        <button
-          className="ml-10 border border-black"
-          onClick={() => navigate('/createLodging')}
-        >
-          Create Lodging
-        </button>
-
-        <button
-          className="ml-10 border border-black"
-          onClick={() => navigate('/myLodging')}
-        >
-          My lodgings
-        </button>
+        <span className=" font-bold text-2xl">My lodgings</span>
       </div>
       <div className="flex">
         {lodging.map(c => {
@@ -72,4 +53,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default MyLodgings;

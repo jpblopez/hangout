@@ -11,7 +11,7 @@ function LodgingDetails() {
   const params = useParams();
 
   const getLodging = async () => {
-    const amenities = getAmenities();
+    getAmenities();
 
     const lodging = await api.get(`/v1/lodging/${params.id}`);
     setLodging(lodging.data);
@@ -19,20 +19,20 @@ function LodgingDetails() {
 
   const getAmenities = async () => {
     const amenities = await api.get('/v2/amenities');
-    console.log('amenities', amenities.data.amenities);
     const specific = await api.get(`/v2/amenities/${params.id}`);
-    console.log('specific', specific.data.amenities);
 
     let result = specific.data.amenities.map(c => {
-      console.log('c', c.amenity_id);
-      let test = _.find(amenities, 'id', c.amenity_id);
-      console.log('result', test);
+      let res = _.find(amenities.data.amenities, x => {
+        if (x.id === c.amenity_id) {
+          return true;
+        }
+      }).name;
+      return res;
     });
 
-    if (amenities.data.amenities.length > 0) {
-      let temp = amenities.data.amenities.slice();
+    if (result.length > 0) {
       setAmenities(() => {
-        return temp;
+        return result;
       });
     }
   };
@@ -56,12 +56,15 @@ function LodgingDetails() {
           <p className="text-xl">{lodging.owner}</p>
         </div>
         <p className="text-xl pb-5">{lodging.description}</p>
-        {/* {lodging.amenities.map(c => {
-          <li>{c.name}</li>;
-        })} */}
+        {amenities.map(c => {
+          return <li>{c}</li>;
+        })}
         <p className="pb-2 text-xl">{lodging.location}</p>
         <p className="pb-4 text-xl">PHP {lodging.rate} per day</p>
-        <button className="border border-black text-xl w-56 h-12">
+        <button
+          onClick={() => navigate(`/payment/${params.id}`)}
+          className="border border-black text-xl w-56 h-12"
+        >
           RENT NOW
         </button>
       </div>

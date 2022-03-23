@@ -57,6 +57,9 @@ function CreateLodging() {
             Authorization: auth.accessToken,
           },
         });
+        setResult(() => {
+          return 'success';
+        });
         console.log('res', res);
       } catch (error) {
         return error;

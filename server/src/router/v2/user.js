@@ -15,4 +15,6 @@ router.post(
   controller.createLodging
 );
 
+router.get('/mylodgings', controller.myLodging);
+
 module.exports = router;

@@ -9,6 +9,8 @@ import RequireAuth from './RequireAuth';
 import api from '../api/axios';
 import useAuth from '../hooks/useAuth';
 import CreateLodging from './createLodging';
+import MyLodging from './myLodging';
+import Stripe from './Stripe';
 
 function App() {
   const { setAuth } = useAuth();
@@ -31,6 +33,8 @@ function App() {
           <Route element={<LodgingDetails />} path="lodging/:id" />
           <Route element={<Homepage />} path="homepage" />
           <Route element={<CreateLodging />} path="createLodging" />
+          <Route element={<MyLodging />} path="myLodging" />
+          <Route element={<Stripe />} path="payment/:id" />
         </Route>
       </Route>
     </Routes>
